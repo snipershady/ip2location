@@ -1,5 +1,5 @@
 {
-    "name": "snipershady/ipapigeolocation",
+    "name": "snipershady/ip2location",
     "description": "Free wrapper to easily implements ip2location.com free API",
     "keywords": ["ip2location", "geolocation", "ip2location.com"],
     "homepage": "https://www.spinfo.it",
