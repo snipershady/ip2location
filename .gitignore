@@ -1,3 +1,5 @@
 /vendor/
 /nbproject/
 /nbproject/private/
+/.rector.cache/
+/.php-cs-fixer.cache
