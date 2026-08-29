@@ -1,0 +1,42 @@
+# -----------------------------------------------------------------------------
+# Text normalization
+# -----------------------------------------------------------------------------
+# Normalize every text file to LF in the repository and on checkout, so the
+# codebase stays byte-identical across Linux / macOS / Windows and CI.
+* text=auto eol=lf
+
+# Files that must keep their exact bytes (never normalized, never text-diffed).
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.phar binary
+
+# -----------------------------------------------------------------------------
+# GitHub Linguist
+# -----------------------------------------------------------------------------
+/vendor/**    linguist-vendored
+composer.lock linguist-generated
+
+# -----------------------------------------------------------------------------
+# Dist package (`composer require --prefer-dist`, `composer archive`,
+# GitHub release tarballs)
+# -----------------------------------------------------------------------------
+# Ship only what the library needs at runtime: src/, composer.json, LICENSE.
+# Everything below is development-only and is stripped from the archive.
+/.github/               export-ignore
+/nbproject/             export-ignore
+/tests/                 export-ignore
+/.editorconfig          export-ignore
+/.gitattributes         export-ignore
+/.gitignore             export-ignore
+/composer.lock          export-ignore
+/.php-cs-fixer.dist.php  export-ignore
+/.php-cs-fixer.cache    export-ignore
+/.rector.cache/         export-ignore
+/phpstan.dist.neon      export-ignore
+/phpunit.xml            export-ignore
+/phpunit.xml.dist       export-ignore
+/rector.php             export-ignore
+/README.md             export-ignore
