@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IpToLocation\Tests;
 
 use IpToLocation\Entity\IpInfo;
 use IpToLocation\Repository\IpInfoRepositoryAPI;
-use RuntimeException;
 
 /*
  * Copyright (C) 2022 Stefano Perrini <perrini.stefano@gmail.com> aka La Matrigna
@@ -24,21 +25,23 @@ use RuntimeException;
  */
 
 /**
- * Description of EntityTest
- * @example ./vendor/phpunit/phpunit/phpunit --verbose tests/EntityTest.php 
+ * Description of EntityTest.
+ *
+ * @example ./vendor/phpunit/phpunit/phpunit --verbose tests/EntityTest.php
  *
  * @author Stefano Perrini <perrini.stefano@gmail.com> aka La Matrigna
  */
-class EntityTest extends AbstractTestCase {
-
-    public function testSerializationValidIp(): void {
-        $ip = "173.194.67.94";
+final class EntityTest extends AbstractTestCase
+{
+    public function testSerializationValidIp(): void
+    {
+        $ip = '173.194.67.94';
         $serviceRetrievere = new IpInfoRepositoryAPI();
         $ipInfoObject = $serviceRetrievere->findByIp($ip);
         $stringSerialized = $ipInfoObject->serialize();
 
-        $newObject = IpInfo::unserialize((string)$stringSerialized);
+        $newObject = IpInfo::unserialize($stringSerialized);
 
-        $this->assertEquals($ipInfoObject->getIp(), $newObject->getIp());
+        $this->assertSame($ipInfoObject->getIp(), $newObject->getIp());
     }
 }

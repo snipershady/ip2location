@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IpToLocation\Repository;
 
 use IpToLocation\Entity\IpInfo;
-use RuntimeException;
 
 /*
  * Copyright (C) 2022 Stefano Perrini <perrini.stefano@gmail.com> aka La Matrigna
@@ -23,38 +24,38 @@ use RuntimeException;
  */
 
 /**
- * Description of IpInfoRepositoryAPI
+ * Description of IpInfoRepositoryAPI.
  *
  * @author Stefano Perrini <perrini.stefano@gmail.com> aka La Matrigna
  */
-final class IpInfoRepositoryAPI implements IpInfoRepositoryInterface {
+final class IpInfoRepositoryAPI implements IpInfoRepositoryInterface
+{
+    private const string ENTRYPOINT = 'https://api.ip2location.io/';
 
-    private string $entrypoint = "https://api.ip2location.io/";
-
-    /**
-     * {@inheritDoc}
-     */
     #[\Override]
-    public function findByIp(string $ip, ?string $apikey = null): IpInfo {
+    public function findByIp(string $ip, ?string $apikey = null): IpInfo
+    {
         $qs = "?ip=$ip&format=json";
-        if (!empty($apikey)) {
+        if (null !== $apikey && '' !== $apikey) {
             $qs .= "&key=$apikey";
         }
 
-        $url = $this->entrypoint . $qs;
-        $ipInfo = IpInfo::unserialize($this->httpRequest($url));
+        $url = self::ENTRYPOINT . $qs;
 
-        return $ipInfo;
+        return IpInfo::unserialize($this->httpRequest($url));
     }
 
     /**
-     * 
-     * @param string $url
-     * @return string
-     * @throws RuntimeException
+     * @param non-empty-string $url
+     *
+     * @throws \RuntimeException
      */
-    private function httpRequest(string $url): string {
+    private function httpRequest(string $url): string
+    {
         $curl = curl_init();
+        if (false === $curl) {
+            throw new \RuntimeException('Fail: unable to initialize cURL');
+        }
 
         curl_setopt_array($curl, [
             CURLOPT_URL => $url,
@@ -68,8 +69,8 @@ final class IpInfoRepositoryAPI implements IpInfoRepositoryInterface {
         ]);
 
         $response = curl_exec($curl);
-        if ($response === false) {
-            throw new RuntimeException("Fail: " . curl_error($curl));
+        if (false === $response) {
+            throw new \RuntimeException('Fail: ' . curl_error($curl));
         }
 
         curl_close($curl);

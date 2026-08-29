@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IpToLocation\Repository;
 
 use IpToLocation\Entity\IpInfo;
-use InvalidArgumentException;
-use RuntimeException;
 
 /*
  * Copyright (C) 2022 Stefano Perrini <perrini.stefano@gmail.com> aka La Matrigna
@@ -24,18 +24,14 @@ use RuntimeException;
  */
 
 /**
- * Description of IpInfoRepositoryInterface
+ * Description of IpInfoRepositoryInterface.
  *
  * @author Stefano Perrini <perrini.stefano@gmail.com> aka La Matrigna
  */
-interface IpInfoRepositoryInterface {
-
+interface IpInfoRepositoryInterface
+{
     /**
-     * 
-     * @param string $ip
-     * @param string|null $apikey
-     * @return IpInfo
-     * @throws InvalidArgumentException|RuntimeException
+     * @throws \InvalidArgumentException|\RuntimeException
      */
     public function findByIp(string $ip, ?string $apikey = null): IpInfo;
 }

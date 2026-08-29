@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IpToLocation\Tests;
 
 use IpToLocation\Service\IpInfoRetriever;
-use RuntimeException;
 
 /*
  * Copyright (C) 2022 Stefano Perrini <perrini.stefano@gmail.com> aka La Matrigna
@@ -23,60 +24,66 @@ use RuntimeException;
  */
 
 /**
- * Description of ServiceRetrieverTest
- * @example ./vendor/phpunit/phpunit/phpunit --verbose tests/ServiceRetrieverTest.php 
+ * Description of ServiceRetrieverTest.
+ *
+ * @example ./vendor/phpunit/phpunit/phpunit --verbose tests/ServiceRetrieverTest.php
  *
  * @author Stefano Perrini <perrini.stefano@gmail.com> aka La Matrigna
  */
-class ServiceRetrieverTest extends AbstractTestCase {
+final class ServiceRetrieverTest extends AbstractTestCase
+{
+    //    public function testServiceIPv4DemoResponse(): void {
+    //        $ip = "173.194.67.94";
+    //        $serviceRetriever = new IpInfoRetriever();
+    //        var_dump($serviceRetriever->findInfoByIp($ip));
+    //        $this->assertTrue(true);
+    //    }
 
-//    public function testServiceIPv4DemoResponse(): void {
-//        $ip = "173.194.67.94";
-//        $serviceRetriever = new IpInfoRetriever();
-//        var_dump($serviceRetriever->findInfoByIp($ip));
-//        $this->assertTrue(true);
-//    }
-
-
-    public function testServiceIPv4(): void {
-        $ip = "173.194.67.94";
+    public function testServiceIPv4(): void
+    {
+        $ip = '173.194.67.94';
         $serviceRetriever = new IpInfoRetriever();
 
-        $this->assertEquals($ip, $serviceRetriever->findInfoByIp($ip)->getIp());
+        $this->assertSame($ip, $serviceRetriever->findInfoByIp($ip)->getIp());
     }
 
-    public function testServiceIPv6(): void {
-        $ip = "2001:4860:4860::8888";
+    public function testServiceIPv6(): void
+    {
+        $ip = '2001:4860:4860::8888';
         $serviceRetriever = new IpInfoRetriever();
 
-        $this->assertEquals($ip, $serviceRetriever->findInfoByIp($ip)->getIp());
+        $this->assertSame($ip, $serviceRetriever->findInfoByIp($ip)->getIp());
     }
 
-    public function testServiceEmptyStringIp(): void {
-        $ip = "";
+    public function testServiceEmptyStringIp(): void
+    {
+        $ip = '';
         $serviceRetriever = new IpInfoRetriever();
-        $this->expectException(RuntimeException::class);
-        $ipInfo = $serviceRetriever->findInfoByIp($ip);
+        $this->expectException(\RuntimeException::class);
+        $serviceRetriever->findInfoByIp($ip);
     }
 
-    public function testServiceNotValidIP(): void {
-        $ip = "NotValidIp";
+    public function testServiceNotValidIP(): void
+    {
+        $ip = 'NotValidIp';
         $serviceRetriever = new IpInfoRetriever();
-        $this->expectException(RuntimeException::class);
-        $ipInfo = $serviceRetriever->findInfoByIp($ip);
+        $this->expectException(\RuntimeException::class);
+        $serviceRetriever->findInfoByIp($ip);
     }
 
-    public function testServiceLocalHost(): void {
-        $ip = "127.0.0.1";
+    public function testServiceLocalHost(): void
+    {
+        $ip = '127.0.0.1';
         $serviceRetriever = new IpInfoRetriever();
-        $this->expectException(RuntimeException::class);
-        $ipInfo = $serviceRetriever->findInfoByIp($ip);
+        $this->expectException(\RuntimeException::class);
+        $serviceRetriever->findInfoByIp($ip);
     }
 
-    public function testServicePrivateRangeIP(): void {
-        $ip = "192.168.0.1";
+    public function testServicePrivateRangeIP(): void
+    {
+        $ip = '192.168.0.1';
         $serviceRetriever = new IpInfoRetriever();
-        $this->expectException(RuntimeException::class);
-        $ipInfo = $serviceRetriever->findInfoByIp($ip);
+        $this->expectException(\RuntimeException::class);
+        $serviceRetriever->findInfoByIp($ip);
     }
 }

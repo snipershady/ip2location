@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IpToLocation\Tests;
 
 use IpToLocation\Repository\IpInfoRepositoryAPI;
-use IpToLocation\Service\IpInfoRetriever;
 
 /*
  * Copyright (C) 2022 Stefano Perrini <perrini.stefano@gmail.com> aka La Matrigna
@@ -23,25 +24,27 @@ use IpToLocation\Service\IpInfoRetriever;
  */
 
 /**
- * Description of RepositoryTest
- * @example ./vendor/phpunit/phpunit/phpunit --verbose tests/RepositoryTest.php 
+ * Description of RepositoryTest.
+ *
+ * @example ./vendor/phpunit/phpunit/phpunit --verbose tests/RepositoryTest.php
  *
  * @author Stefano Perrini <perrini.stefano@gmail.com> aka La Matrigna
  */
-class RepositoryTest extends AbstractTestCase {
-
-    public function testServiceIPv4(): void {
-        $ip = "173.194.67.94";
+final class RepositoryTest extends AbstractTestCase
+{
+    public function testServiceIPv4(): void
+    {
+        $ip = '173.194.67.94';
         $repo = new IpInfoRepositoryAPI();
 
-        $this->assertEquals($ip, $repo->findByIp($ip)->getIp());
+        $this->assertSame($ip, $repo->findByIp($ip)->getIp());
     }
 
-    public function testServiceIPv6(): void {
-        $ip = "2001:4860:4860::8888";
+    public function testServiceIPv6(): void
+    {
+        $ip = '2001:4860:4860::8888';
         $repo = new IpInfoRepositoryAPI();
 
-        $this->assertEquals($ip, $repo->findByIp($ip)->getIp());
+        $this->assertSame($ip, $repo->findByIp($ip)->getIp());
     }
-
 }

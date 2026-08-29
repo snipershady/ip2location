@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IpToLocation\Service;
 
 use IpToLocation\Entity\IpInfo;
@@ -23,19 +25,19 @@ use IpToLocation\Repository\IpInfoRepositoryAPI;
  */
 
 /**
- * Description of IpInfoRetriever
+ * Description of IpInfoRetriever.
  *
  * @author Stefano Perrini <perrini.stefano@gmail.com> aka La Matrigna
  */
-final class IpInfoRetriever {
-
+final class IpInfoRetriever
+{
     /**
-     * <p>Returns IP Geolocation of caller IP address or defined IP address</p>
-     * @param string $ip
-     * @return IpInfo
+     * <p>Returns IP Geolocation of caller IP address or defined IP address</p>.
      */
-    public function findInfoByIp(string $ip): IpInfo {
+    public function findInfoByIp(string $ip): IpInfo
+    {
         $repo = new IpInfoRepositoryAPI();
+
         return $repo->findByIp($ip);
     }
 }
